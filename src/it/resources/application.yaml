@@ -1,0 +1,9 @@
+server:
+  servlet:
+    context-path: /test-api
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: api-test
