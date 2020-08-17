@@ -1,0 +1,473 @@
+{
+	"info": {
+		"_postman_id": "95ddcf78-78b1-466c-bda0-dd7ad0d1d467",
+		"name": "Products",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "actuator",
+			"item": [
+				{
+					"name": "HEALTH",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "60bd6a08-48ab-4933-92f3-ec161225e2cd",
+								"exec": [
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Exibiu o nome\", function () { \r",
+									"        pm.expect(jsonData.status).is.to.equal(\"UP\"); \r",
+									"    });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/actuator/health",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"actuator",
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "brands",
+			"item": [
+				{
+					"name": "CREATE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3f02f631-8d33-4ef5-9fc2-92dfe28b6088",
+								"exec": [
+									"var bodyData = JSON.parse(responseBody)\r",
+									"pm.environment.set(\"brand_id\",bodyData.id)\r",
+									"console.log(\"brand [\" + pm.environment.get(\"brand_id\") + \"]\");\r",
+									"tests[\"Ok \"] = responseCode.code === 200;\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Name\", function () { \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"any brand\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"any brand\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/brands",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"brands"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RETRIEVE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a81bfcaa-01f4-43ef-a2c6-604685dd7e74",
+								"exec": [
+									"tests[\"Registers\"] = responseCode.code === 200;\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Name appeared\", function () { \r",
+									"        pm.expect(jsonData[0].name).is.to.equal(\"any brand\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/brands",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"brands"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RETRIEVE BY ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c45bf070-0075-4713-97cf-da28486c19bb",
+								"exec": [
+									"var bodyData = JSON.parse(responseBody)\r",
+									"pm.environment.set(\"brand_id\",bodyData.id)\r",
+									"console.log(\"brand [\" + pm.environment.get(\"brand_id\") + \"]\");\r",
+									"tests[\"Ok \"] = responseCode.code === 200;\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Name\", function () { \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"any brand\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/brands/{{brand_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"brands",
+								"{{brand_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ec486faa-af2c-4a6c-a7bd-de60df28581d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "cd642780-ad6c-445c-b117-3d1bd1014d65",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "CREATE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f73ba51e-dbb4-4318-80af-3c0b4970e6d2",
+								"exec": [
+									"var bodyData = JSON.parse(responseBody)\r",
+									"pm.environment.set(\"product_id\",bodyData.id)\r",
+									"pm.environment.set(\"product_name\",bodyData.name)\r",
+									"console.log(\"brand [\" + pm.environment.get(\"product_id\") + \"]\");\r",
+									"tests[\"Ok \"] = responseCode.code === 200;\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Name\", function () { \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"beer a\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"beer a\",\r\n    \"description\":\"weiss\",\r\n    \"price\":\"10.00\",\r\n    \"brand\": {\r\n        \"id\":\"{{brand_id}}\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RETRIEVE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c9db2dd3-4051-4347-8155-6d4466c406e8",
+								"exec": [
+									"tests[\"Registers\"] = responseCode.code === 200;\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Name appeared\", function () { \r",
+									"        pm.expect(jsonData[0].name).is.to.equal(\"beer a\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/products/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RETRIEVE BY ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "331e5b79-3d47-401d-b962-88e4c2e6309b",
+								"exec": [
+									"var bodyData = JSON.parse(responseBody)\r",
+									"pm.environment.set(\"product_id\",bodyData.id)\r",
+									"console.log(\"brand [\" + pm.environment.get(\"product_id\") + \"]\");\r",
+									"tests[\"Ok \"] = responseCode.code === 200;\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Name\", function () { \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"beer a\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/products/{{product_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"{{product_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RETRIEVE BY NAME",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4f6bc32b-56c4-43fa-a337-eb19dcfb6baf",
+								"exec": [
+									"tests[\"Registers\"] = responseCode.code === 200;\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Name appeared\", function () { \r",
+									"        pm.expect(jsonData[0].name).is.to.equal(\"beer a\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/products?name={{product_name}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "{{product_name}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6aa951ce-31d0-4186-8ed6-dab1499d81a3",
+								"exec": [
+									"var bodyData = JSON.parse(responseBody)\r",
+									"pm.environment.set(\"product_id\",bodyData.id)\r",
+									"pm.environment.set(\"product_name\",bodyData.name)\r",
+									"console.log(\"brand [\" + pm.environment.get(\"product_id\") + \"]\");\r",
+									"tests[\"Ok \"] = responseCode.code === 200;\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Name\", function () { \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"beer b\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"beer b\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/{{product_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"{{product_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d7751b07-ef75-4009-a546-d03da4939923",
+								"exec": [
+									"tests[\"Deleted\"] = responseCode.code === 204;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/products/{{product_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"{{product_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
