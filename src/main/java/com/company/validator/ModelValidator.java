@@ -37,6 +37,7 @@ public abstract class ModelValidator<T extends BaseModel> {
     public void validateId(String id) throws EntityNotFoundException {
         String className = getClass().getName();
         if (!repository.findById(id).isPresent())
+            // TODO implement exits
             throw new EntityNotFoundException(String.format("%s %s not found", className, id));
     }
 

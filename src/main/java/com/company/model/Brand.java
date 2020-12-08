@@ -16,6 +16,8 @@ public class Brand extends BaseModel {
     @NonNull
     private String name;
 
+    private boolean inactive = false;
+
     @Builder
     public Brand(String id, LocalDateTime createdDate, LocalDateTime lastModifiedDate, String name) {
         super(id, createdDate, lastModifiedDate);

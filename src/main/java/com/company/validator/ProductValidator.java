@@ -13,6 +13,8 @@ public class ProductValidator extends ModelValidator<Product> {
         super(repository);
     }
 
+    // TODO remover Agora eu uso o @Indexed(unique = true)
+
     @Override
     public void customInsertValidation(Product product) throws ServiceException {
         ProductRepository repository = (ProductRepository) getRepository();
@@ -26,6 +28,8 @@ public class ProductValidator extends ModelValidator<Product> {
             customInsertValidation(product);
         if ( Objects.nonNull(product.getName()) )
             retrievedProduct.setName(product.getName());
+        if ( Objects.nonNull(product.getBrand()) )
+            retrievedProduct.setBrand(product.getBrand());
         if ( Objects.nonNull(product.getDescription()) )
             retrievedProduct.setDescription( product.getDescription());
         if ( Objects.nonNull(product.getPrice()) )

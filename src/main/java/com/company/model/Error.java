@@ -11,4 +11,5 @@ public class Error {
 
     private int status;
     private String message;
+    private String urlDocumentation;
 }

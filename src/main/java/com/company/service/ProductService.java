@@ -37,7 +37,7 @@ public class ProductService {
     }
 
     public Product update(Product product) throws ServiceException {
-        validator.validateId(product.getId());
+        //validator.validateId(product.getId());
         Product retrievedProduct = productRepository.findById( product.getId() ).get();
         return productRepository.save( (Product) validator.customUpdateValidation(product, retrievedProduct));
     }
@@ -46,7 +46,7 @@ public class ProductService {
         return productRepository.findAll(pageable);
     }
 
-    public Product findById(String id) throws ServiceException {
+    public Product findById(String id) {
         String message = String.format("Product %s not found", id);
         return productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(message));
     }

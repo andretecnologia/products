@@ -24,13 +24,15 @@ public class ProductController {
     @Autowired
     ProductService service;
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO product) throws Exception {
         return ResponseEntity.ok(entityToDto(service.insert(dtoToEntity(product))));
+        // TODO 201 Created
     }
 
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductDTO> update(@RequestBody ProductDTO product, @PathVariable String id) throws Exception {
+        // TODO Ver se existe, retornar 404 not found
         product.setId(id);
         return ResponseEntity.ok(entityToDto(service.update(dtoToEntity(product))));
     }
@@ -38,6 +40,7 @@ public class ProductController {
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductDTO> getById(@PathVariable String id) throws Exception {
         return ResponseEntity.ok(entityToDto(service.findById(id)));
+        // TODO 404 Not Found
     }
 
     @DeleteMapping("/{id}")

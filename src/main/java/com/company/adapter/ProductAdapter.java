@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 
+// TODO colocar @Componet e adicionar o @Autowired do brand service
+
 public class ProductAdapter {
 
     public static Product dtoToEntity(ProductDTO dto){

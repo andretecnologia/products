@@ -10,6 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 @Slf4j
@@ -39,9 +43,12 @@ public class ControllerExceptionHandler {
     }
 
     private Error buildError(int status, Exception ex) {
+        HttpServletRequest request =    ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String baseUrl = request.getRequestURL().substring(0,request.getRequestURL().indexOf(request.getContextPath())+request.getContextPath().length());
         return Error.builder()
                 .status(status)
                 .message(ex.getMessage())
+                .urlDocumentation(baseUrl.toString() + "/swagger-ui.html")
                 .build();
     }
 }
